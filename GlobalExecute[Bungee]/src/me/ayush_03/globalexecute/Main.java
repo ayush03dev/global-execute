@@ -9,7 +9,4 @@ public class Main extends Plugin {
 		BungeeCord.getInstance().getPluginManager().registerCommand(this, new CommandClass());
 		BungeeCord.getInstance().registerChannel("Return");
 	}
-	
-	
-
 }
