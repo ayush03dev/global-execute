@@ -30,9 +30,5 @@ public class Main extends JavaPlugin implements PluginMessageListener {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
 	}
-	
-	
-
 }
