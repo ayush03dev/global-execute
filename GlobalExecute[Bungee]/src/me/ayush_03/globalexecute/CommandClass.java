@@ -41,10 +41,6 @@ public class CommandClass extends Command{
 		}
 		
 		sender.sendMessage(new TextComponent(ChatColor.GREEN + "Command: '/" + cmd + "' has been executed on all servers."));
-		
-		
-		
-		
 	}
 	
 	 private void sendToBukkit(String channel, String message, ServerInfo server) {
@@ -59,5 +55,4 @@ public class CommandClass extends Command{
 	        server.sendData("Return", stream.toByteArray());
 
 	    }
-
 }
