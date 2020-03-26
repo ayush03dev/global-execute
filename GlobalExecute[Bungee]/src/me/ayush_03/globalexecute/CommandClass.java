@@ -16,6 +16,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class CommandClass extends Command{
 
 	public CommandClass() {
+		// Command, permission and alias.
 		super("gexecute", "gexecute.admin", "ge");
 	}
 
