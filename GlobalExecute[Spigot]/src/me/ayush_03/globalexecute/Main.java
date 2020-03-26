@@ -11,6 +11,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 public class Main extends JavaPlugin implements PluginMessageListener {
 	
 	public void onEnable() {
+		// Registering the channel..
 		 Bukkit.getMessenger().registerIncomingPluginChannel(this, "Return", this);
 	}
 
@@ -22,9 +23,12 @@ public class Main extends JavaPlugin implements PluginMessageListener {
 		try {
 			String sub = in.readUTF();
 			if (sub.equals("command")) {
+				
+				// Signal received.
+				
 				String cmd = in.readUTF();
 				System.out.println("[GlobalExecute] Received a command message from BungeeCord, executing it.");
-				getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
+				getServer().dispatchCommand(getServer().getConsoleSender(), cmd); 
 				
 			}
 		} catch (Exception ex) {
