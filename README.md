@@ -1,4 +1,4 @@
-# GlobalExecute
+# GlobalExecute (16/12/2015)
 A plugin which will execute a command on all servers connected to BungeeCord. This plugin is available to download. https://www.spigotmc.org/resources/globalexecute.15732/
 
 # Update (26/03/2016)
