@@ -11,14 +11,19 @@ import java.io.IOException;
 
 public class Main extends JavaPlugin implements PluginMessageListener {
 
+    public static final String channel = "gexecute:channel";
+
     @Override
     public void onEnable() {
-        Bukkit.getMessenger().registerIncomingPluginChannel(this, "globalexecute:channel", this);
+        getCommand("gexecute").setExecutor(new GECommand(this));
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, channel, this);
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, channel);
     }
 
     @Override
     public void onPluginMessageReceived(String channel, Player p, byte[] message) {
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(message));
+
         try {
             String subChannel = in.readUTF();
 
