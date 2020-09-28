@@ -29,7 +29,6 @@ public class Main extends JavaPlugin implements PluginMessageListener {
 
             if (subChannel.equalsIgnoreCase("command")) {
                 String command = in.readUTF();
-                System.out.println("[GlobalExecute] Received a command request from BungeeCord, executing it.");
                 getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
             }
         } catch (IOException e) {
