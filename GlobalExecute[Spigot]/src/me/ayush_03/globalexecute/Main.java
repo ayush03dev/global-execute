@@ -11,11 +11,21 @@ import java.io.IOException;
 
 public class Main extends JavaPlugin implements PluginMessageListener {
 
-    public static final String channel = "gexecute:channel";
+    // Already initialized as the default channel name
+    public static String channel = "ge:cmdchannel";
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         getCommand("gexecute").setExecutor(new GECommand(this));
+
+        if (getConfig().isSet("channel")) {
+            String channelName = getConfig().getString("channel");
+            if (channelName.contains(":")) {
+                channel = channelName;
+            }
+        }
+
         Bukkit.getMessenger().registerIncomingPluginChannel(this, channel, this);
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, channel);
     }
