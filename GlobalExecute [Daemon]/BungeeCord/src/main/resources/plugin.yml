@@ -1,0 +1,5 @@
+name: GlobalExecute
+version: 1.0
+main: me.ayushdev.globalexecute.GlobalExecute
+description: Bungee part of the GlobalExecute plugin
+author: Ayush_03

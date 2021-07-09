@@ -1,0 +1,19 @@
+# DO NOT SHARE THE VALUES OF THESE FIELDS WITH ANYONE
+
+# IP Address of the server on which GE Daemon is running
+# It is a string, so it MUST BE enclosed within single quotes ('')
+# By default (127.0.0.1), it is a localhost address. So if both daemon and client are running on the same machine,
+# you may not need to change it. Otherwise, set the same ip that you use to connect to the BungeeCord.
+IP: '127.0.0.1'
+
+# PORT on which GE Daemon is listening
+PORT: 25560
+
+# PASSWORD required for letting this GE client connect to the GE Daemon
+PASSWORD: 'PASSWORD1234'
+
+# Name of this GE client
+# It will be used as an argument to run a command specifically on this Spigot Server
+# It must be unique over all other clients
+# It is a string, so it MUST BE enclosed within single quotes ('')
+NAME: 'server1'
