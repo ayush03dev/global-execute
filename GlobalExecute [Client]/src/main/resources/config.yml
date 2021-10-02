@@ -13,7 +13,19 @@ PORT: 25560
 PASSWORD: 'PASSWORD1234'
 
 # Name of this GE client
+# DO NOT have any spaces or you may run into problems
 # It will be used as an argument to run a command specifically on this Spigot Server
 # It must be unique over all other clients
 # It is a string, so it MUST BE enclosed within single quotes ('')
 NAME: 'server1'
+
+
+# By enabling this setting, if there is no connection between client and daemon,
+# the client will automatically attempt to establish a connection in every interval.
+# Interval value is in seconds.
+# You can limit the number of attempts.
+# If you do not want any limit on attempts, set its value to -1.
+auto-reconnect:
+    enabled: true
+    interval: 60
+    attempts: 5

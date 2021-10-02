@@ -1,7 +1,9 @@
 package me.ayushdev.globalexecute;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -49,20 +51,18 @@ public class GlobalExecute extends JavaPlugin {
         }
         LogManager.getInstance().log( "Attempting to connect to the Daemon...", MessageType.NEUTRAL);
 
-        try {
-            Map<String, String> headers = new HashMap<String, String>();
-            headers.put("ge-password", getConfig().getString("PASSWORD"));
-            headers.put("ge-client", getConfig().getString("NAME").toLowerCase());
-            client = new GEClient(new URI("ws://" + getConfig().getString("IP") + ':' + getConfig().getInt("PORT")),
-                    headers);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            LogManager.getInstance().log( "There was a problem while connecting to the Daemon! Disabling the plugin...", MessageType.BAD);
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
+        instanciateClient();
 
         client.connect();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (client.isClosed()) {
+                    startReconnectionAttempt();
+                }
+            }
+        }.runTaskLater(this, 20*10);
     }
 
     @Override
@@ -74,6 +74,50 @@ public class GlobalExecute extends JavaPlugin {
 
     public static GlobalExecute getInstance() {
         return instance;
+    }
+
+    private void instanciateClient() {
+        try {
+            Map<String, String> headers = new HashMap<String, String>();
+            headers.put("ge-password", getConfig().getString("PASSWORD"));
+            headers.put("ge-client", getConfig().getString("NAME").toLowerCase());
+            client = new GEClient(new URI("ws://" + getConfig().getString("IP") + ':' + getConfig().getInt("PORT")),
+                    headers);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            LogManager.getInstance().log( "There was a problem while connecting to the Daemon! Disabling the plugin...", MessageType.BAD);
+            getServer().getPluginManager().disablePlugin(this);
+        }
+    }
+
+    public void startReconnectionAttempt() {
+        ConfigurationSection section = getConfig().getConfigurationSection("auto-reconnect");
+
+        boolean enabled = section.getBoolean("enabled");
+        int interval = section.getInt("interval");
+        int maxAttempts = section.getInt("attempts");
+
+        if (enabled) {
+            new BukkitRunnable() {
+                int attempts = 0;
+                @Override
+                public void run() {
+                    if (client.isClosed()) {
+                        if ((maxAttempts == -1)
+                                || (maxAttempts > 0 && attempts <= maxAttempts)) {
+                            instanciateClient();
+                            LogManager.getInstance().log("Attempting to re-connect to the Daemon...", MessageType.NEUTRAL);
+                            client.connect();
+                            attempts++;
+                        } else {
+                            cancel();
+                        }
+                    } else {
+                        cancel();
+                    }
+                }
+            }.runTaskTimerAsynchronously(this, 0, 20 * interval);
+        }
     }
 
 }

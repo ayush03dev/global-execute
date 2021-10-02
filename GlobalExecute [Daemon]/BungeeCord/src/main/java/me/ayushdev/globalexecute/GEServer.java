@@ -22,9 +22,12 @@ public class GEServer extends WebSocketServer {
 
     public GEServer(int port) throws UnknownHostException {
         super(new InetSocketAddress(port));
+        setReuseAddr(true);
         this.port = port;
+
     }
 
+    @Override
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
         if (!clientHandshake.hasFieldValue(PASSWORD_FIELD)) {
             webSocket.send("LOG " +
@@ -80,6 +83,7 @@ public class GEServer extends WebSocketServer {
         ));
     }
 
+    @Override
     public void onClose(WebSocket webSocket, int i, String s, boolean b) {
         List<String> toRemove = new ArrayList<>();
         for (Map.Entry<String, GEClient> entry : GlobalExecute.CLIENTS.entrySet()) {
@@ -98,6 +102,7 @@ public class GEServer extends WebSocketServer {
         }
     }
 
+    @Override
     public void onMessage(WebSocket webSocket, String s) {
         if (s.equals("CLIENTS_LIST")) {
 
@@ -148,12 +153,15 @@ public class GEServer extends WebSocketServer {
         }
     }
 
+    @Override
     public void onError(WebSocket webSocket, Exception e) {
-
+        e.printStackTrace();
+        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.RED +
+                "An error occurred!"));
     }
 
     public void onStart() {
-        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(ChatColor.GREEN +
+        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.GREEN +
                 "Daemon started listening on port " + port));
         setConnectionLostTimeout(0);
         setConnectionLostTimeout(100);

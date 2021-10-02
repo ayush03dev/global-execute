@@ -20,13 +20,13 @@ public class GlobalExecute extends Plugin {
 
     protected static final Map<String, GEClient> CLIENTS = new HashMap<>();
     public static final String PREFIX = ChatColor.GOLD + "[GlobalExecute] ";
+    private GEServer server;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new GECommand());
 
-        GEServer server;
         int port = getConfig().getInt("PORT");
 
         if (port <= 0) {
@@ -56,6 +56,15 @@ public class GlobalExecute extends Plugin {
 
         server.start();
 
+    }
+
+    @Override
+    public void onDisable() {
+        try {
+            server.stop();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void saveDefaultConfig() {

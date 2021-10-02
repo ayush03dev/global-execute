@@ -6,7 +6,7 @@
 
     <groupId>me.ayushdev</groupId>
     <artifactId>GlobalExecute_Bungee</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.0.1</version>
 
     <build>
         <plugins>

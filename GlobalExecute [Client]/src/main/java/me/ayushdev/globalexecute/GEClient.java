@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import java.net.ConnectException;
 import java.net.URI;
 import java.util.Map;
 
@@ -74,12 +75,22 @@ public class GEClient extends WebSocketClient {
 
     @Override
     public void onClose(int i, String s, boolean b) {
-        LogManager.getInstance().log("Connection closed with Daemon!",
-                MessageType.BAD);
+        if (b) {
+            LogManager.getInstance().log("Connection closed with Daemon!",
+                    MessageType.BAD);
+
+            GlobalExecute.getInstance().startReconnectionAttempt();
+        }
     }
 
     @Override
     public void onError(Exception e) {
+        if (e instanceof ConnectException) {
+            LogManager.getInstance().log( "Could not connect to the Daemon, it's probably offline!",
+                    MessageType.BAD);
+//            LogManager.getInstance().log("Attempting to reconnect in 5 seconds", MessageType.NEUTRAL);
+            return;
+        }
         e.printStackTrace();
         LogManager.getInstance().log( "Could not connect to the Daemon!",
                 MessageType.BAD);
@@ -93,4 +104,5 @@ public class GEClient extends WebSocketClient {
         }
         return builder.toString().trim();
     }
+
 }
