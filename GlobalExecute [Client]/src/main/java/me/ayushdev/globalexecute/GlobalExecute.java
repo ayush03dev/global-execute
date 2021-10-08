@@ -51,7 +51,7 @@ public class GlobalExecute extends JavaPlugin {
         }
         LogManager.getInstance().log( "Attempting to connect to the Daemon...", MessageType.NEUTRAL);
 
-        instanciateClient();
+        instantiateClient();
 
         client.connect();
 
@@ -59,7 +59,7 @@ public class GlobalExecute extends JavaPlugin {
             @Override
             public void run() {
                 if (client.isClosed()) {
-                    startReconnectionAttempt();
+                    startAutoReconnectionAttempt();
                 }
             }
         }.runTaskLater(this, 20*10);
@@ -76,7 +76,7 @@ public class GlobalExecute extends JavaPlugin {
         return instance;
     }
 
-    private void instanciateClient() {
+    private void instantiateClient() {
         try {
             Map<String, String> headers = new HashMap<String, String>();
             headers.put("ge-password", getConfig().getString("PASSWORD"));
@@ -85,12 +85,12 @@ public class GlobalExecute extends JavaPlugin {
                     headers);
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            LogManager.getInstance().log( "There was a problem while connecting to the Daemon! Disabling the plugin...", MessageType.BAD);
+            LogManager.getInstance().log( "There was a problem while instantiating the client! Disabling the plugin...", MessageType.BAD);
             getServer().getPluginManager().disablePlugin(this);
         }
     }
 
-    public void startReconnectionAttempt() {
+    public void startAutoReconnectionAttempt() {
         ConfigurationSection section = getConfig().getConfigurationSection("auto-reconnect");
 
         boolean enabled = section.getBoolean("enabled");
@@ -105,7 +105,7 @@ public class GlobalExecute extends JavaPlugin {
                     if (client.isClosed()) {
                         if ((maxAttempts == -1)
                                 || (maxAttempts > 0 && attempts <= maxAttempts)) {
-                            instanciateClient();
+                            instantiateClient();
                             LogManager.getInstance().log("Attempting to re-connect to the Daemon...", MessageType.NEUTRAL);
                             client.connect();
                             attempts++;
@@ -119,5 +119,4 @@ public class GlobalExecute extends JavaPlugin {
             }.runTaskTimerAsynchronously(this, 0, 20 * interval);
         }
     }
-
 }

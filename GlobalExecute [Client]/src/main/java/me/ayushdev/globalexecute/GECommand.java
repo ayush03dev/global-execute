@@ -17,9 +17,7 @@ public class GECommand implements CommandExecutor {
             }
 
             if (args.length == 0) {
-                sender.sendMessage(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:");
-                sender.sendMessage(ChatColor.GRAY + "/ge execute <server>|all <command>");
-                sender.sendMessage(ChatColor.GRAY + "/ge list");
+                sendHelp(sender);
                 return true;
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("list")) {
@@ -36,9 +34,8 @@ public class GECommand implements CommandExecutor {
                     }
 
                     sender.sendMessage( GlobalExecute.PREFIX + ChatColor.RED + "Command not found!");
-                    sender.sendMessage(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:");
-                    sender.sendMessage(ChatColor.GRAY + "/ge execute <server>|all <command>");
-                    sender.sendMessage(ChatColor.GRAY + "/ge list");
+                    sendHelp(sender);
+
                 }
             } else if (args.length >= 3) {
                 if (args[0].equalsIgnoreCase("execute")) {
@@ -52,9 +49,8 @@ public class GECommand implements CommandExecutor {
                     }
                 } else {
                     sender.sendMessage( GlobalExecute.PREFIX + ChatColor.RED + "Command not found!");
-                    sender.sendMessage(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:");
-                    sender.sendMessage(ChatColor.GRAY + "/ge execute <server>|all <command>");
-                    sender.sendMessage(ChatColor.GRAY + "/ge list");
+                    sendHelp(sender);
+
                 }
             } else {
                 if (args[0].equalsIgnoreCase("execute")) {
@@ -62,9 +58,7 @@ public class GECommand implements CommandExecutor {
                     return true;
                 } else {
                     sender.sendMessage( GlobalExecute.PREFIX + ChatColor.RED + "Command not found!");
-                    sender.sendMessage(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:");
-                    sender.sendMessage(ChatColor.GRAY + "/ge execute <server>|all <command>");
-                    sender.sendMessage(ChatColor.GRAY + "/ge list");
+                    sendHelp(sender);
                 }
             }
         }
@@ -78,5 +72,11 @@ public class GECommand implements CommandExecutor {
             builder.append(args[i] + " ");
         }
         return builder.toString().trim();
+    }
+
+    private void sendHelp(CommandSender sender) {
+        sender.sendMessage(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:");
+        sender.sendMessage(ChatColor.GRAY + "/ge execute <server>|all <command>");
+        sender.sendMessage(ChatColor.GRAY + "/ge list");
     }
 }

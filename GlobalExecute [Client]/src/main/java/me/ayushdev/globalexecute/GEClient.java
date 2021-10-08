@@ -79,7 +79,7 @@ public class GEClient extends WebSocketClient {
             LogManager.getInstance().log("Connection closed with Daemon!",
                     MessageType.BAD);
 
-            GlobalExecute.getInstance().startReconnectionAttempt();
+            GlobalExecute.getInstance().startAutoReconnectionAttempt();
         }
     }
 
