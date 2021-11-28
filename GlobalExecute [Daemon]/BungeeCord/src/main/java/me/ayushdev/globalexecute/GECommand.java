@@ -44,10 +44,7 @@ public class GECommand extends Command {
                     return;
                 }
 
-                sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.RED + "Command not found!"));
-                sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:"));
-                sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge execute <server>|all <command>"));
-                sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge list"));
+              sendHelp(sender);
             }
 
         } else if (args.length >= 3) {
@@ -87,20 +84,13 @@ public class GECommand extends Command {
                             + ChatColor.GRAY + "" + serverName + ChatColor.GREEN + '!'));
                 }
             } else {
-                sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.RED + "Command not found!"));
-                sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:"));
-                sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge execute <server>|all <command>"));
-                sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge list"));
+               sendHelp(sender);
             }
         } else {
             if (args[0].equalsIgnoreCase("execute")) {
                 sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.RED + "Usage: /ge execute <server>|all <command>"));
             } else {
-                sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.RED + "Command not found!"));
-                sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:"));
-                sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge execute <server>|all <command>"));
-                sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge list"));
-                ;
+              sendHelp(sender);
             }
         }
     }
@@ -112,5 +102,12 @@ public class GECommand extends Command {
             builder.append(args[i] + " ");
         }
         return builder.toString().trim();
+    }
+
+    private void sendHelp(CommandSender sender) {
+        sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.RED + "Command not found!"));
+        sender.sendMessage(new TextComponent(GlobalExecute.PREFIX + ChatColor.GRAY + "Available commands:"));
+        sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge execute <server>|all <command>"));
+        sender.sendMessage(new TextComponent(ChatColor.GRAY + "/ge list"));
     }
 }
