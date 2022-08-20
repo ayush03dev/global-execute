@@ -15,7 +15,8 @@ public class GlobalExecute extends JavaPlugin {
     public static final String PREFIX = ChatColor.GOLD + "[GlobalExecute] ";
     private static GlobalExecute instance;
     protected static GEClient client;
-
+    protected static boolean shouldLogCommands = true;
+    
     @Override
     public void onEnable() {
         instance = this;
@@ -82,7 +83,11 @@ public class GlobalExecute extends JavaPlugin {
             headers.put("ge-password", getConfig().getString("PASSWORD"));
             headers.put("ge-client", getConfig().getString("NAME").toLowerCase());
             client = new GEClient(new URI("ws://" + getConfig().getString("IP") + ':' + getConfig().getInt("PORT")),
-                    headers);
+            headers);
+            if(getConfig().isSet("log.command-executed"))
+            {
+                shouldLogCommands = getConfig().getBoolean("log.command-executed");
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
             LogManager.getInstance().log( "There was a problem while instantiating the client! Disabling the plugin...", MessageType.BAD);

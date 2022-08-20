@@ -1,11 +1,11 @@
-name: GlobalExecute
+name: 'GlobalExecute'
 version: 1.0.1
-main: me.ayushdev.globalexecute.GlobalExecute
-author: Ayush_03
-description: Spigot part of the GlobalExecute plugin
+main: 'me.ayushdev.globalexecute.GlobalExecute'
+author: 'Ayush_03'
+description: 'Spigot part of the GlobalExecute plugin'
 
 commands:
   globalexecute:
-    usage: /<command> <args>
-    description: Primary command.
-    aliases: [ge, gexecute]
+    usage: '/<command> <args>'
+    description: 'Primary command.'
+    aliases: ['ge', 'gexecute']

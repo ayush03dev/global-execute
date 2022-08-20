@@ -29,3 +29,8 @@ auto-reconnect:
     enabled: true
     interval: 60
     attempts: 5
+
+# Which things should be logged
+log:
+# a command has been executed on client servers
+    command-executed: false

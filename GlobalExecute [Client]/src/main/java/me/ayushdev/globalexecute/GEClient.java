@@ -35,10 +35,13 @@ public class GEClient extends WebSocketClient {
             String[] args = s.split(" ");
             String target = args[1];
             String command = wrapArguments(args, 2);
+            if(GlobalExecute.shouldLogCommands)
+            {
             GlobalExecute.getInstance().getServer().getConsoleSender().sendMessage(
                     GlobalExecute.PREFIX + ChatColor.GREEN + "Command `" +
                             ChatColor.GRAY + '/' + command + ChatColor.GREEN + "' has been executed on client server named "
                             + ChatColor.GRAY + "" + target + ChatColor.GREEN + '!');
+            }
         } else if (s.startsWith("EXEC_ONE_FAIL")) {
             String[] args = s.split(" ");
             String target = args[1];
@@ -57,10 +60,13 @@ public class GEClient extends WebSocketClient {
             );
         } else if (s.startsWith("EXEC_ALL_SUCCESS")) {
             String command = s.replace("EXEC_ALL_SUCCESS ", "");
-            GlobalExecute.getInstance().getServer().getConsoleSender().sendMessage(
+            if(GlobalExecute.shouldLogCommands)
+            {
+                GlobalExecute.getInstance().getServer().getConsoleSender().sendMessage(
                     GlobalExecute.PREFIX + ChatColor.GREEN + "Command `" +
                             ChatColor.GRAY + '/' + command + ChatColor.GREEN + "' has been executed on all client servers!"
-            );
+                );
+            }
         } else if (s.startsWith("LIST_SUCCESS")) {
             String result = s.replace("LIST_SUCCESS ", "");
             GlobalExecute.getInstance().getServer().getConsoleSender().sendMessage(
