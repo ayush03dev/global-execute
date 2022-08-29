@@ -1,0 +1,4 @@
+
+GlobalExecute \[Client\]/target/
+GlobalExecute \[Daemon\]/BungeeCord/target/
+GlobalExecute \[Client\]/dependency-reduced-pom.xml
